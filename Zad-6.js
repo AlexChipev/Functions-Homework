@@ -1,8 +1,6 @@
-
-
 let arr = [{
     id: "6f9e8be0-ec85-43cb-ab6b-0a591274363f",
-    age: 60,
+    age: 45,
     firstName: "Josefa",
     lastName: "Clark",
     gender: "female",
@@ -23,7 +21,7 @@ let arr = [{
     smartphone: "Blackberry"
 }, {
     id: "ebc2e2d9-b5fc-4ab4-8388-59c88991c0b3",
-    age: 46,
+    age: 36,
     firstName: "Alba",
     lastName: "Cote",
     gender: "female",
@@ -75,41 +73,24 @@ let arr = [{
 console.log(search(arr));
 
 function search(arr) {
-    let objIphone = null;
-    let minAge = 0;
-    for (let search of arr) {
-        if (checkModel(search)) {
-            if ((minAge - checkAge(search)) < 0) {
-                minAge = checkAge(search);
-            } else if (minAge - checkAge(search) >= 0){
-                minAge = checkAge;
-                objIphone = search;
-          }
+    let ageProp = [];
+    for (let object of arr) {
+        if (object.smartphone === 'iPhone') {
+            ageProp.push(object);
         }
     }
-    return objIphone;
+    return checkAge(ageProp);
 }
 
-function checkModel(search) {
+function checkAge(ageProp) {
+    let minAge = ageProp[0].age;
+    let object = null;
+    for (let ageVal of ageProp) {
 
-    for (let i = 0; i < Object.values(search).length; i++) {
-        let searchValue = Object.values(search)[i];
-        if (searchValue === 'iPhone') {
-            return search;
+        if (minAge >= ageVal.age) {
+            minAge = ageVal.age;
+            object = ageVal;
         }
     }
-    return false;
-}
-
-function checkAge(search) {
-    if (checkModel(search)) {
-        for (let i = 0; i < Object.keys(search).length; i++) {
-            let searchKeyAge = Object.keys(search)[i];
-            let searchValueAge = Object.values(search)[i];
-            if (searchKeyAge === 'age') {
-                return searchValueAge;
-            }
-        }
-    }
-    return false;
+    return object;
 }
